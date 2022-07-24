@@ -15,34 +15,34 @@ interface Users {
 const RepositoriesPage = (): JSX.Element => {
   const [repositories, setRepositories] = useState<Users[]>([]);
   const [userName, setUserName] = useState<string | undefined>('');
-  const [statusResponse, setStatusResponse] = useState<number>();
+  const [loadingStatus, setLoadingStatus] = useState<boolean>(false);
 
   const params = useParams();
 
   useEffect(() => {
+    setLoadingStatus(true);
     setUserName(params.name);
     axios
       .get(`https://api.github.com/users/${userName}/repos`, {
         headers: {
-          Authorization: `token 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`,
+          Authorization: `token ${process.env.REACT_APP_GITHUB_TOKEN}`,
         },
         validateStatus: function (status) {
-          setStatusResponse(status);
-          console.log(statusResponse);
           return status < 400;
         },
       })
       .then(({ data }) => {
-        console.log('logou');
-
         setRepositories(data);
+      })
+      .then(() => {
+        setLoadingStatus(false);
       });
-  }, [params.name, params.repo, statusResponse, userName]);
+  }, [params.name, params.repo, userName]);
 
   return (
     <div className={styles.container}>
       <Repositories
-        statusResponse={statusResponse}
+        loadingStatus={loadingStatus}
         userName={userName}
         repositories={repositories}
       />

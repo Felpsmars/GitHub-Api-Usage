@@ -13,7 +13,8 @@ interface Users {
 const BranchesPage = (): JSX.Element => {
   const [repositoryName, setRepositoryName] = useState<string | undefined>('');
   const [username, setUsername] = useState<string | undefined>('');
-  const [statusResponse, setStatusResponse] = useState<number>();
+  const [loadingStatus, setLoadingStatus] = useState<boolean>(false);
+
   const [repositories, setRepositories] = useState<Users[]>([]);
 
   const params = useParams();
@@ -21,25 +22,26 @@ const BranchesPage = (): JSX.Element => {
   useEffect(() => {
     setUsername(params.name);
     setRepositoryName(params.repo);
+    setLoadingStatus(true);
     axios
       .get(
         `https://api.github.com/repos/${username}/${repositoryName}/branches`,
         {
           headers: {
-            Authorization: `token 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`,
+            Authorization: `token ${process.env.REACT_APP_GITHUB_TOKEN}`,
           },
           validateStatus: function (status) {
-            setStatusResponse(status);
-            console.log(statusResponse);
-
             return status < 400;
           },
         }
       )
       .then(({ data }) => {
         setRepositories(data);
+      })
+      .then(() => {
+        setLoadingStatus(false);
       });
-  }, [params, repositoryName, statusResponse, username]);
+  }, [params, repositoryName, username]);
 
   return (
     <div className={styles.container}>
@@ -47,7 +49,7 @@ const BranchesPage = (): JSX.Element => {
         repositories={repositories}
         repositoryName={repositoryName}
         userName={username}
-        statusResponse={statusResponse}
+        loadingStatus={loadingStatus}
       />
     </div>
   );

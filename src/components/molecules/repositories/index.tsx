@@ -10,29 +10,33 @@ interface Users {
 }
 
 interface RepositoriesProps {
-  statusResponse: number | undefined;
+  loadingStatus: boolean;
   userName: string | undefined;
   repositories: Users[];
 }
 
-const Repositories = (props: RepositoriesProps): JSX.Element => {
+const Repositories = ({
+  loadingStatus,
+  userName,
+  repositories,
+}: RepositoriesProps): JSX.Element => {
   const navigate = useNavigate();
 
   return (
     <div className={styles.repositories}>
       <Container>
         <>
-          {props.statusResponse === 404 ? (
+          {loadingStatus ? (
             <p>User does not exist!</p>
           ) : (
-            props.repositories.map((repository: Users) => {
+            repositories.map((repository: Users) => {
               return (
                 <div className={styles.content}>
                   <p
                     className={styles.text}
                     key={repository.id}
                     onClick={() =>
-                      navigate(`/branches/${props.userName}/${repository.name}`)
+                      navigate(`/branches/${userName}/${repository.name}`)
                     }
                   >
                     {repository.name}

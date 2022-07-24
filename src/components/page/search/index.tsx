@@ -10,7 +10,7 @@ const SearchPage = (): JSX.Element => {
   const handleSubmit = () => {
     axios.get(`https://api.github.com/users/${userName}/repos`, {
       headers: {
-        Authorization: `token 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`,
+        Authorization: `token ${process.env.Github_Token}`,
       },
       validateStatus: function (status) {
         setStatusResponse(status);

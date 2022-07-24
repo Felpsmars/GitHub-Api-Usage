@@ -15,31 +15,36 @@ interface User {
 
 const SideBar = (): JSX.Element => {
   const [userName, setUserName] = useState<string | undefined>('');
-  const [statusResponse, setStatusResponse] = useState<number>();
+  const [loadingStatus, setLoadingStatus] = useState<boolean>(false);
   const [repositories, setRepositories] = useState<User>();
 
   const navigate = useNavigate();
   const params = useParams();
 
   useEffect(() => {
+    setLoadingStatus(true);
     setUserName(params.name);
     axios
       .get(`https://api.github.com/users/${userName}`, {
+        headers: {
+          Authorization: `token ${process.env.REACT_APP_GITHUB_TOKEN}`,
+        },
         validateStatus: function (status) {
-          setStatusResponse(status);
-          console.log(statusResponse);
           return status < 400;
         },
       })
       .then(({ data }) => {
         setRepositories(data);
+      })
+      .then(() => {
+        setLoadingStatus(false);
       });
-  }, [params.name, params.repo, statusResponse, userName]);
+  }, [params.name, params.repo, userName]);
 
   return (
     <>
       <div className={styles.sidebar}>
-        {statusResponse === 404 ? (
+        {loadingStatus ? (
           <p>cant fetch any data</p>
         ) : (
           <div className={styles.content}>

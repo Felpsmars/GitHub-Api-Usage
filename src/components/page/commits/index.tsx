@@ -18,7 +18,7 @@ interface Users {
 const CommitsPage = (): JSX.Element => {
   const [repositoryName, setRepositoryName] = useState<string | undefined>('');
   const [username, setUsername] = useState<string | undefined>('');
-  const [statusResponse, setStatusResponse] = useState<number>();
+  const [loadingStatus, setLoadingStatus] = useState<boolean>(false);
 
   const [repositories, setRepositories] = useState<Users[]>([]);
 
@@ -27,28 +27,28 @@ const CommitsPage = (): JSX.Element => {
   useEffect(() => {
     setUsername(params.name);
     setRepositoryName(params.repo);
+    setLoadingStatus(true);
     axios
       .get(
         `https://api.github.com/repos/${username}/${repositoryName}/commits`,
         {
           headers: {
-            Authorization: `token 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`,
+            Authorization: `token ${process.env.REACT_APP_GITHUB_TOKEN}`,
           },
           validateStatus: function (status) {
-            setStatusResponse(status);
             return status < 400;
           },
         }
       )
       .then(({ data }) => {
-        console.log(data);
         setRepositories(data);
+        setLoadingStatus(false);
       });
-  }, [params, repositoryName, statusResponse, username]);
+  }, [params, repositoryName, username]);
 
   return (
     <div className={styles.container}>
-      <Commits statusResponse={statusResponse} repositories={repositories} />
+      <Commits loadingStatus={loadingStatus} repositories={repositories} />
     </div>
   );
 };

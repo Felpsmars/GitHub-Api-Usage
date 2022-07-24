@@ -8,14 +8,14 @@ interface Users {
 }
 
 interface BranchesProps {
-  statusResponse: number | undefined;
+  loadingStatus: boolean;
   userName: string | undefined;
   repositoryName: string | undefined;
   repositories: Users[];
 }
 
 const Branches = ({
-  statusResponse,
+  loadingStatus,
   userName,
   repositoryName,
   repositories,
@@ -26,7 +26,7 @@ const Branches = ({
     <div className={styles.branches}>
       <Container>
         <>
-          {statusResponse === 404 ? (
+          {loadingStatus ? (
             <p>cant fetch any branches at this repository</p>
           ) : (
             repositories.map((repository: Users) => {

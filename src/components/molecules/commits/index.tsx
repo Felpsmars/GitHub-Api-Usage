@@ -13,19 +13,19 @@ interface Users {
 }
 
 interface CommitsProps {
-  statusResponse: number | undefined;
+  loadingStatus: boolean;
   repositories: Users[];
 }
 
 const Commits = ({
-  statusResponse,
+  loadingStatus,
   repositories,
 }: CommitsProps): JSX.Element => {
   return (
     <div className={styles.commits}>
       <Container>
         <>
-          {statusResponse === 404 ? (
+          {loadingStatus ? (
             <p>cant fetch any commits at this branch</p>
           ) : (
             repositories.map((repository: Users) => {
