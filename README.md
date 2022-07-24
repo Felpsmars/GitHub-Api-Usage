@@ -13,10 +13,15 @@ Front-end:
 ```bash
 npm install ou yarn install
 ``` 
-Projeto irá abrir na porta <a href="https://localhost:3000">3000</a>
+
 ## Executando aplicação
 * Para rodar o front-end:
 
+> Criar um arquivo .env igual ao .env.example e trocar github_token por um Personal access tokens.
+<p> Segue <a href="https://docs.github.com/pt/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">documentação</a> de como criar o personal acess token.<p>
+ 
+> Em seguida rode esse comando no terminal:
 ```
 npm start ou yarn install
 ```
+Projeto irá abrir na porta <a href="https://localhost:3000">3000</a>
