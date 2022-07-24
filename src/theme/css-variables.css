@@ -1,0 +1,15 @@
+:root {
+  --color-primary-text: #c9d1d9;
+  --color-dark-background: #161b22;
+  --color-dark-background2: #0d1117;
+  --color-grey-line: #21262d;
+  --color-blue-text: #58a6ff;
+  --color-grey-text: #8b949e;
+
+  --color-white: #fff;
+  --color-grey-border-btn: #f0f6fc1a;
+  --color-orange-btn: #238636;
+  --color-orange-hover-btn: #2ea043; 
+  --color-grey-sidebar-btn: #30363d;
+  --color-grey-sidebar-hover-btn: #8b949e;
+}
