@@ -8,8 +8,16 @@ interface ISearch {
   onSubmit: (e: FormEvent<HTMLFormElement>) => void;
   setUserName: (event: string) => void;
   userName: string;
-  statusResponse: number | undefined;
+  statusResponse: number;
 }
+
+const isUserValid = (statusResponse: number) => {
+  if (typeof statusResponse !== 'undefined') {
+    if (statusResponse >= 400) {
+      return <p>User does not exist</p>;
+    }
+  }
+};
 
 const Search = ({
   onSubmit,
@@ -25,7 +33,8 @@ const Search = ({
         onSubmit={(e: FormEvent<HTMLFormElement>) => {
           e.preventDefault();
           onSubmit(e);
-          if (statusResponse) {
+          if (userName) {
+            console.log(statusResponse);
             navigate(`/repositories/${userName}`);
           }
         }}
@@ -45,7 +54,7 @@ const Search = ({
             <button className={styles.btn} type='submit'>
               <span className={styles.searchText}>Search</span>
             </button>
-            <div>{statusResponse === 404 && <p>User does not exist!</p>}</div>
+            <div>{isUserValid(statusResponse)}</div>
           </div>
         </Container>
       </form>

@@ -5,9 +5,10 @@ import { useState } from 'react';
 
 const SearchPage = (): JSX.Element => {
   const [userName, setUserName] = useState<string>('');
-  const [statusResponse, setStatusResponse] = useState<number>();
+  const [statusResponse, setStatusResponse] = useState<number>(0);
 
   const handleSubmit = () => {
+    console.log(userName);
     axios.get(`https://api.github.com/users/${userName}/repos`, {
       headers: {
         Authorization: `token ${process.env.Github_Token}`,
