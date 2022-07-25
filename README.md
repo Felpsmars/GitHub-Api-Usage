@@ -17,7 +17,7 @@ npm install ou yarn install
 ## Executando aplicação
 * Para rodar o front-end:
 
-> Criar um arquivo .env igual ao .env.example e trocar REACT_APP_GITHUB_TOKEN por um Personal access tokens.
+> Criar um arquivo .env igual ao .env.example e trocar PERSONAL_ACESS_TOKEN pelo seu Personal access tokens.
 <p> Segue <a href="https://docs.github.com/pt/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">documentação</a> de como criar o personal acess token.<p>
  
 > Em seguida rode esse comando no terminal:
